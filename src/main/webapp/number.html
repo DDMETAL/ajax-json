@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>number</title>
+<script type="text/javascript" src="JS/jquery-1.11.1.js"></script>
+<script type="text/javascript">
+	$(function(){
+		$('#a1').click(f2);
+	});
+	function f1(){
+		$.ajax({
+			"url":"getNumber.do",
+			"type":"get",
+			"dataType":"text",
+			"success":function(number){
+				var txt=number;
+				$('#msg').html(number);
+			}
+		});
+	}
+	
+	function f2(){
+		/*
+			load方法:向服务器发送异步请求(getNumber.do)
+			然后将服务器返回的数据添加到符号要求的节点上(即id为msg的节点)
+		*/
+		$('#msg').load('getNumber.do');
+	}
+</script>
+</head>
+<body>
+	<a id="a1" href="javascript:;">点击显示一个随机整数</a>
+	<span id="msg"></span><br/>
+</body>
+</html>

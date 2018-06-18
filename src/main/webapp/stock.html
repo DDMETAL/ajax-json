@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>json应用</title>
+<script type="text/javascript" src="JS/jquery-1.11.1.js"></script>
+<script type="text/javascript">
+	$(function(){
+		//页面加载完成后，每隔5s执行一次quoto函数
+		setInterval(quoto,5000);
+	});
+	
+	/*
+		向服务器发送异步请求，并将服务器返回的股票信息(json字符串)读出来，利用这些信息更新表格
+	*/
+	function  quoto(){
+		//$.ajax方法由JQuery提供
+		//{}是一个对象，用来控制ajax对象如何向服务器发送请求
+		$.ajax({
+			"url":"quoto.do",
+			"type":"post",
+			"dataType":"json",
+			"success":function(data){
+				/*
+					data是服务器返回的数据
+					如果dataType是json字符串，则自动转换成对应的JavaScript对象
+				*/
+				$('#tb1').empty();
+				for(i=0;i<data.length;i++){
+					var s=data[i];
+					$('#tb1').append('<tr><td>'+s.code+'</td><td>'+s.name+'</td><td>'+s.price+'</td></tr>');
+				}
+			},
+			"error":function(){
+			}
+		});
+	}
+</script>
+<style>
+	#d1{
+		width:250px;
+		height:360px;
+		margin-left:400px;
+		magrin-top:5px;
+		background-color:black;
+	}
+	#d2{
+		height:40px;
+		background-color:red;
+		color:white;
+		text-align:center
+	}
+	table{
+		color:white;
+		font-style:italic;
+		font-size:24px;
+	}
+</style>
+</head>
+<body>
+	<div id="d1">
+		<div id="d2">股票实时行情</div>
+		<div id="d3">
+			<table width="100%">
+				<thead>
+					<tr>
+						<td>代码</td>
+						<td>名称</td>
+						<td>价格</td>
+					</tr>
+				</thead>
+				<tbody id="tb1">
+				</tbody>
+			</table>
+		</div>
+	</div>
+</body>
+</html>
